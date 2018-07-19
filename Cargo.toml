@@ -3,4 +3,10 @@ name = "deko_os"
 version = "0.1.0"
 authors = ["dekokun <dekokun@hatena.ne.jp>"]
 
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+
 [dependencies]
