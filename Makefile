@@ -1,3 +1,5 @@
+build:
+	cargo xbuild --target x86_64-deko_os.json
+
 run:
-	cargo rustc -- -Z pre-link-arg=-lSystem
-	./target/debug/deko_os
+	docker-compose run deko_os make -C /tmp/ build
