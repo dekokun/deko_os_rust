@@ -3,12 +3,11 @@
 #![no_main]
 
 extern crate bootloader_precompiled;
+extern crate volatile;
 
 use core::panic::PanicInfo;
 
 mod vga_buffer;
-
-static HELLO: &[u8] = b"Hello World!";
 
 #[no_mangle] // don't mangle the name of this function
 pub extern "C" fn _start() -> ! {
