@@ -8,3 +8,7 @@ authors = ["dekokun <dekokun@hatena.ne.jp>"]
 [profile.release]
 
 [dependencies]
+bootloader_precompiled = "0.2.0"
+
+[package.metadata.bootimage]
+default-target = "x86_64-deko_os.json"
