@@ -126,4 +126,5 @@ pub fn print_something() {
     writer.write_byte(b'H');
     writer.write_str("ello! ").unwrap();
     write!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
+    write!(writer, "{} {} {} {} {} {} {} {} ", 1.0/3.0, 1.0/3.0, 1.0/3.0, 1.0/3.0, 1.0/3.0, 1.0/3.0, 1.0/3.0, 1.0/3.0).unwrap();
 }
