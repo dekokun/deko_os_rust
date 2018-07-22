@@ -1,6 +1,6 @@
 #![feature(panic_implementation)]
 #![no_std]
-#![no_main]
+#![cfg_attr(not(test), no_main)]
 #[macro_use]
 extern crate lazy_static;
 extern crate spin;
@@ -8,6 +8,7 @@ extern crate spin;
 extern crate bootloader_precompiled;
 extern crate volatile;
 
+#[cfg_attr(test, allow(unused_imports))]
 use core::panic::PanicInfo;
 
 #[macro_use]
@@ -20,6 +21,7 @@ pub extern "C" fn _start() -> ! {
     loop {}
 }
 
+#[cfg(not(test))]
 #[panic_implementation]
 #[no_mangle]
 pub fn panic(info: &PanicInfo) -> ! {

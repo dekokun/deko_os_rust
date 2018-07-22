@@ -8,3 +8,5 @@ run:
 	docker-compose run deko_os make -C /tmp/ build
 	qemu-system-x86_64 -drive format=raw,file=$(TARGET)
 
+test:
+	cargo test
