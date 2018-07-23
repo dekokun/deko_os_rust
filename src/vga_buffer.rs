@@ -143,6 +143,50 @@ pub fn print(args: fmt::Arguments) {
 mod test {
     use super::*;
 
+    fn construct_writer() -> Writer {
+        use std::boxed::Box;
+
+        let buffer = construct_buffer();
+        Writer {
+            column_position: 0,
+            color_code: ColorCode::new(Color::Blue, Color::Magenta),
+            buffer: Box::leak(Box::new(buffer)),
+        }
+    }
+
+    fn construct_buffer() -> Buffer {
+        use array_init::array_init;
+        Buffer {
+            chars: array_init(|_| array_init(|_| Volatile::new(empty_char())))
+        }
+    }
+
+    fn empty_char() -> ScreenChar {
+    ScreenChar {
+        ascii_character: b' ',
+        color_code: ColorCode::new(Color::Green, Color::Brown),
+    }
+}
+
     #[test]
-    fn foo() {}
+    fn write_byte() {
+        let mut writer = construct_writer();
+        writer.write_byte(b'D');
+        writer.write_byte(b'E');
+
+        for (i, row) in writer.buffer.chars.iter().enumerate() {
+            for (j, screen_char) in row.iter().enumerate() {
+                let screen_char = screen_char.read();
+                if i == BUFFER_HEIGHT - 1 && j == 0 {
+                    assert_eq!(screen_char.ascii_character, b'D');
+                    assert_eq!(screen_char.color_code, writer.color_code);
+                } else if i == BUFFER_HEIGHT - 1 && j == 1 {
+                    assert_eq!(screen_char.ascii_character, b'E');
+                    assert_eq!(screen_char.color_code, writer.color_code);
+                } else {
+                    assert_eq!(screen_char, empty_char());
+                }
+            }
+        }
+    }
 }
