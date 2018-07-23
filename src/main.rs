@@ -3,6 +3,9 @@
 #![cfg_attr(not(test), no_main)]
 #![cfg_attr(test, allow(dead_code, unused_macros, unused_imports))]
 
+#[cfg(test)]
+extern crate std;
+
 #[macro_use]
 extern crate lazy_static;
 extern crate spin;
