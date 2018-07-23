@@ -1,6 +1,8 @@
 #![feature(panic_implementation)]
 #![no_std]
 #![cfg_attr(not(test), no_main)]
+#![cfg_attr(test, allow(dead_code, unused_macros, unused_imports))]
+
 #[macro_use]
 extern crate lazy_static;
 extern crate spin;
@@ -8,7 +10,6 @@ extern crate spin;
 extern crate bootloader_precompiled;
 extern crate volatile;
 
-#[cfg_attr(test, allow(unused_imports))]
 use core::panic::PanicInfo;
 
 #[macro_use]
