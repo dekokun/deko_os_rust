@@ -8,22 +8,27 @@ extern crate std;
 #[cfg(test)]
 extern crate array_init;
 
+
 #[macro_use]
 extern crate lazy_static;
 extern crate spin;
 
 extern crate bootloader_precompiled;
 extern crate volatile;
+extern crate uart_16550;
 
 use core::panic::PanicInfo;
 
 #[macro_use]
 mod vga_buffer;
+#[macro_use]
+mod serial;
 
 #[no_mangle] // don't mangle the name of this function
 pub extern "C" fn _start() -> ! {
     print!("Hello again deko");
     println!(", some numbers: {} {}", 42, 1.337);
+    serial_println!("Hello Host{}", "!");
     loop {}
 }
 
