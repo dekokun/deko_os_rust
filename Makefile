@@ -21,6 +21,7 @@ unit-test:
 	docker-compose run deko_os cargo test --manifest-path $(WORKDIR)/Cargo.toml
 
 test:
+	docker-compose build
 	$(MAKE) integration-test
 	$(MAKE) unit-test
 
