@@ -1,0 +1,6 @@
+sudo: required
+language: rust
+services:
+  - docker
+script:
+  - make test
