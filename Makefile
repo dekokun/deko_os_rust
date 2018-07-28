@@ -14,8 +14,8 @@ run:
 
 
 integration-test:
-	docker-compose run deko_os bash -c "cd /tmp; bootimage test"
 	docker-compose run deko_os bootimage test --manifest-path $(WORKDIR)/Cargo.toml
+	docker-compose run deko_os bash -c "cd /tmp; bootimage test"
 
 
 unit-test:
