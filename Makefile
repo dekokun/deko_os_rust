@@ -3,7 +3,7 @@ TARGET=target/x86_64-deko_os/debug/bootimage-deko_os.bin
 WORKDIR=/tmp
 
 build:
-	docker-compose run deko_os bootimage build --manifest-path $(WORKDIR)/Cargo.toml
+	docker-compose run deko_os bash -c "cd $(WORKDIR); bootimage build"
 
 run:
 	$(MAKE) build
@@ -14,13 +14,14 @@ run:
 
 
 integration-test:
-	docker-compose run deko_os bootimage test --manifest-path $(WORKDIR)/Cargo.toml
+	docker-compose run deko_os bash -c "cd $(WORKDIR); bootimage test"
 
 
 unit-test:
-	docker-compose run deko_os cargo test --manifest-path $(WORKDIR)/Cargo.toml
+	docker-compose run deko_os bash -c "cd $(WORKDIR); cargo test"
 
 test:
+	docker-compose build
 	$(MAKE) integration-test
 	$(MAKE) unit-test
 
