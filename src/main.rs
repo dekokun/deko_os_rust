@@ -13,12 +13,13 @@ use core::panic::PanicInfo;
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
     println!("Hello World{}", "!");
+    deko_os::gdt::init();
     init_idt();
 
-    // invoke a breakpoint exception
-    unsafe {
-        *(0xdeadbeef as *mut u64) = 42;
-    };
+    fn stack_overflow() {
+        stack_overflow(); // for each recursion, the return address is pushed
+    }
+    stack_overflow();
 
     println!("It did not crash!");
     loop {}
@@ -42,7 +43,9 @@ lazy_static! {
     static ref IDT: InterruptDescriptorTable = {
         let mut idt = InterruptDescriptorTable::new();
         idt.breakpoint.set_handler_fn(breakpoint_handler);
-        idt.double_fault.set_handler_fn(double_fault_handler);
+        unsafe {
+            idt.double_fault.set_handler_fn(double_fault_handler).set_stack_index(deko_os::gdt::DOUBLE_FAULT_IST_INDEX);;
+        }
         idt
     };
 }
