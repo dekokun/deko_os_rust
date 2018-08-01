@@ -25,9 +25,22 @@ test:
 	$(MAKE) integration-test
 	$(MAKE) unit-test
 
-local-run:
+local-build:
 	bootimage build
+
+local-run:
+	$(MAKE) local-build
 	qemu-system-x86_64 \
 		-drive format=raw,file=/Users/dekokun/src/github.com/dekokun/deko_os_rust/target/x86_64-deko_os/debug/bootimage-deko_os.bin \
 		-device isa-debug-exit,iobase=0xf4,iosize=0x04 \
 		-serial mon:stdio
+
+local-unit-test:
+	cargo test
+
+local-integration-test:
+	bootimage test
+
+local-test:
+	$(MAKE) local-unit-test
+	$(MAKE) local-integration-test
