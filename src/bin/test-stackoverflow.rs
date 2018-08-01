@@ -19,6 +19,8 @@ pub extern "C" fn _start() -> ! {
         stack_overflow(); // for each recursion, the return address is pushed
     }
     stack_overflow();
+    serial_println!("failed");
+    serial_println!("No exception occured");
     loop {}
 }
 
@@ -26,6 +28,8 @@ pub extern "C" fn _start() -> ! {
 #[panic_implementation]
 #[no_mangle]
 pub fn panic(_info: &PanicInfo) -> ! {
+    serial_println!("failed");
+    serial_println!("{}", info);
     loop {}
 }
 
