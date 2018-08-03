@@ -15,6 +15,7 @@ use deko_os::exit_qemu;
 pub extern "C" fn _start() -> ! {
     deko_os::gdt::init();
     init_idt();
+    #[allow(unconditional_recursion)]
     fn stack_overflow() {
         stack_overflow(); // for each recursion, the return address is pushed
     }
@@ -53,7 +54,7 @@ pub fn init_idt() {
 }
 
 extern "x86-interrupt" fn double_fault_handler(
-    stack_frame: &mut ExceptionStackFrame, _error_code: u64)
+    _: &mut ExceptionStackFrame, _error_code: u64)
 {
     serial_println!("ok");
     unsafe {
