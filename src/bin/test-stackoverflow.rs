@@ -29,7 +29,7 @@ pub extern "C" fn _start() -> ! {
 #[no_mangle]
 pub fn panic(_info: &PanicInfo) -> ! {
     serial_println!("failed");
-    serial_println!("{}", info);
+    serial_println!("{}", _info);
     loop {}
 }
 
