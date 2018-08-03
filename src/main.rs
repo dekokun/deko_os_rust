@@ -16,6 +16,7 @@ pub extern "C" fn _start() -> ! {
     deko_os::gdt::init();
     init_idt();
 
+    #[allow(unconditional_recursion)]
     fn stack_overflow() {
         stack_overflow(); // for each recursion, the return address is pushed
     }
